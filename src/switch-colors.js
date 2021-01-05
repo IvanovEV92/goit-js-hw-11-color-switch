@@ -13,13 +13,9 @@ const refs = {
 };
 
 let timerId = null;
-let isActive = false;
-refs.btnStart.addEventListener('click', () => {
-  if (isActive) {
-    return;
-  }
-  isActive = true;
-  refs.btnStart.setAttribute('disabled', true);
+
+const swichColorStart = () => {
+  refs.btnStart.disabled = true;
 
   timerId = setInterval(() => {
     const randomIntegerFromInterval = (min, max) => {
@@ -28,12 +24,10 @@ refs.btnStart.addEventListener('click', () => {
     const index = randomIntegerFromInterval(0, colors.length - 1);
     refs.colorBody.style.backgroundColor = colors[index];
   }, 1000);
-});
-
-// По клику на Стоп вызовем clearInterval и передадим
-// аргументом ID того счетчика который надо остановить
-refs.btnStop.addEventListener('click', () => {
+};
+const swichColorStop = () => {
   clearInterval(timerId);
-  isActive = false;
-  refs.btnStart.removeAttribute('disabled');
-});
+  refs.btnStart.disabled = false;
+};
+refs.btnStart.addEventListener('click', swichColorStart);
+refs.btnStop.addEventListener('click', swichColorStop);
